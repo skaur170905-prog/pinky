@@ -90,7 +90,7 @@
 <body>
 
 <!-- Background video -->
-<video id="bgVideo" autoplay muted loop>
+<video id="bgVideo" autoplay muted loop playsinline preload="auto">
     <source src="videopinky.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
 </video>
@@ -146,10 +146,20 @@ yesBtn.addEventListener('click', () => {
     message.style.display = 'block';
 });
 </script>
+<script>
+const bgVideo = document.getElementById('bgVideo');
+
+// Start video with sound on first touch
+document.addEventListener('touchstart', () => {
+    bgVideo.muted = false; // unmute
+    bgVideo.play();
+}, { once: true });
+</script>
 
 
 </body>
 </html>
+
 
 
 
