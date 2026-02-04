@@ -104,27 +104,52 @@
 </div>
 
 <script>
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const message = document.getElementById('message');
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const message = document.getElementById('message');
 
-    // Move the No button randomly when hovered
-    noBtn.addEventListener('mouseover', () => {
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-    });
+let scale = 1; // initialize the shrinking scale
 
-    // Show message when Yes is clicked
-    yesBtn.addEventListener('click', () => {
-        yesBtn.style.display = 'none';
-        noBtn.style.display = 'none';
-        message.style.display = 'block';
-    });
+function moveNoButton() {
+    // Move the button randomly
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+
+    // Shrink the button slightly
+    scale -= 0.08;
+    if (scale < 0.3) scale = 0.3; // prevent it from disappearing completely
+    noBtn.style.transform = `scale(${scale})`;
+}
+
+// Desktop hover
+noBtn.addEventListener('mouseover', moveNoButton);
+
+// Mobile touch
+noBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // prevent accidental click
+    moveNoButton();
+});
+
+// Fallback click
+noBtn.addEventListener('click', moveNoButton);
+
+// Yes button
+yesBtn.addEventListener('click', () => {
+    yesBtn.style.display = 'none';
+    noBtn.style.display = 'none';
+    message.style.display = 'block';
+});
 </script>
+
 
 </body>
 </html>
+
 
 
